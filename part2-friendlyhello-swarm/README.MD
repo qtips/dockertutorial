@@ -1,18 +1,17 @@
 Using swarm with local registry
 
-Sources: 
+Sources:
 https://docs.docker.com/registry/deploying/  
 https://docs.docker.com/get-started/part3/  
-https://docs.docker.com/get-started/part4/   
 https://docs.docker.com/machine/install-machine/  
 zsh auto complete docker machine https://docs.docker.com/machine/completion/  
 
 Setup local registry
 ```bash
-#download and start registry 
+#download and start registry
 docker run -d -p 5000:5000 --restart=always --name registry registry:2
-#retag before pushing local image "friendlyhello" to registry 
-#must use url of registry in tag 
+#retag before pushing local image "friendlyhello" to registry
+#must use url of registry in tag
 docker image tag friendlyhello localhost:5000/my-friendlyhello
 #push to registry
 docker push localhost:5000/my-friendlyhello
@@ -23,8 +22,10 @@ docker image remove localhost:5000/my-friendlyhello
 docker pull localhost:5000/my-friendlyhello
 #remove
 docker image remove localhost:5000/my-friendlyhello
-``` 
+```
+
 Single node docker swarm  
+```bash
 #### using swarm to deploy service with docker-compose.yml
 #### make sure that docker-compose.yml has correct image name
 #### localhost:5000/my-friendlyhello:latest
@@ -46,7 +47,7 @@ curl -4 http://localhost
 curl -4 http://localhost
 curl -4 http://localhost
 #scale the app by changing replicas i docker-compose.yml
-vi docker-compose.yml 
+vi docker-compose.yml
 #redeploy changes
 docker stack deploy -c docker-compose.yml getstartedlab
 #view new replicas
@@ -57,23 +58,3 @@ docker stack rm getstartedlab
 #take swarm down
 docker swarm leave --force
 ```
-
-Multinode docker swarm with virtual machines
-```bash
-# install docker-machine
-base=https://github.com/docker/machine/releases/download/v0.14.0 &&
-  curl -L $base/docker-machine-$(uname -s)-$(uname -m) >/tmp/docker-machine &&
-  sudo install /tmp/docker-machine /usr/local/bin/docker-machine
-# restart terminal and test docker-machine
-docker-machine version
-# optionally, fix docker-machine autocompletion in zsh, see sources
-
-# install virtualbox 
-sudo apt-get install virtualbox 
-
-# create virtual machines
-# --virtualbox-no-vtx-check is needed if running virtualbox inside virtualbox
-docker-machine create --driver virtualbox --virtualbox-no-vtx-check myvm1
-
-```
-
