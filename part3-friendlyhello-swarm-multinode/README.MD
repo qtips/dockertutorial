@@ -1,8 +1,6 @@
 Multinode docker swarm with virtual machines nodes using local registry
 The commands are run on a Mac with Oracle VirtualBox installed. When installing Docker for Mac, docker-machine is also included
 
-Using swarm with local registry
-
 Sources:
 https://docs.docker.com/registry/deploying/  
 https://docs.docker.com/get-started/part4/   
@@ -93,6 +91,7 @@ curl -4 <myvm2 ip>
 curl -4 <myvm2 ip>
 curl -4 <myvm2 ip>
 
+# Note that docker takes care of load-balancing your app accross nodes!
 
 # Scale / descale your app by changing the compose file by adding/removing replicas
 vi docker-compose-swarm.yml
